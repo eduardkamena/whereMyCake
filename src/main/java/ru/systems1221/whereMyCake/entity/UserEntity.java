@@ -1,7 +1,15 @@
 package ru.systems1221.whereMyCake.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.systems1221.whereMyCake.constant.AimEnum;
@@ -16,6 +24,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JsonIgnore
     @Schema(description = "Идентификатор пользователя")
     @Column(name = "id", unique = true, nullable = false)
     private UUID id;
@@ -26,6 +35,8 @@ public class UserEntity {
 
     @Schema(description = "Email пользователя")
     @Column(name = "email", unique = true, nullable = false)
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+            message = "Email должен быть корректного формата")
     private String email;
 
     @Schema(description = "Возраст пользователя")
@@ -41,6 +52,7 @@ public class UserEntity {
     private int height;
 
     @Schema(description = "Цель пользователя")
-    @Column(name = "aim", nullable = false)
+    @Column(name = "aim", columnDefinition = "VARCHAR(12)", nullable = false)
+    @Enumerated(EnumType.STRING)
     private AimEnum aim;
 }
