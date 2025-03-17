@@ -22,6 +22,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) {
+        log.info("createUser method called for User with id: {}", user.getId());
         UserEntity createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
     }

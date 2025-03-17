@@ -16,6 +16,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity createUser(UserEntity user) {
+        log.info("Successfully created User with id: {}", user.getId());
         return userRepository.save(user);
     }
 }
