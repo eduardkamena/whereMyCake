@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.systems1221.whereMyCake.constant.AimEnum;
+import ru.systems1221.whereMyCake.constant.GenderEnum;
 
 import java.util.UUID;
 
@@ -38,6 +39,11 @@ public class UserEntity {
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
             message = "Email должен быть корректного формата")
     private String email;
+
+    @Schema(description = "Пол пользователя")
+    @Column(name = "gender", columnDefinition = "VARCHAR(1)", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private GenderEnum gender;
 
     @Schema(description = "Возраст пользователя")
     @Column(name = "age", nullable = false)

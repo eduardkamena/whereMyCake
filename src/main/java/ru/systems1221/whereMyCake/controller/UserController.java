@@ -24,9 +24,14 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserEntity> createUser(@Valid @RequestBody UserEntity user) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserEntity user) {
         log.info("createUser method called for User with id: {}", user.getId());
-        UserEntity createdUser = userService.createUser(user);
-        return ResponseEntity.ok(createdUser);
+        try {
+            UserEntity createdUser = userService.createUser(user);
+            return ResponseEntity.ok(createdUser);
+        } catch (IllegalArgumentException e) {
+            log.error("Validation error: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
