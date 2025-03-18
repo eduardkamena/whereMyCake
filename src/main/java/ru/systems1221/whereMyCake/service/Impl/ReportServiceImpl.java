@@ -7,6 +7,7 @@ import ru.systems1221.whereMyCake.entity.DishEntity;
 import ru.systems1221.whereMyCake.entity.DishParameter;
 import ru.systems1221.whereMyCake.model.DailyReport;
 import ru.systems1221.whereMyCake.repository.DishRepository;
+import ru.systems1221.whereMyCake.service.CalorieService;
 import ru.systems1221.whereMyCake.service.ReportService;
 
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class ReportServiceImpl implements ReportService {
 
     private final DishRepository dishRepository;
+    private final CalorieService calorieService;
 
     @Override
     public DailyReport getDailyUserReport(UUID userId, LocalDate date) {
@@ -41,6 +43,44 @@ public class ReportServiceImpl implements ReportService {
 
             log.info("Successfully get Daily Report for userId: {}, date: {}", userId, date);
             return new DailyReport(totalCalories, dishCount);
+        }
+    }
+
+    @Override
+    public String checkDailyUserCalorie(UUID userId, LocalDate date) {
+
+        float dailyUserCalorie = getDailyUserReport(userId, date).totalCalories();
+        float userBaseCalorie = calorieService.getUserCalorie(userId);
+
+        if (dailyUserCalorie < userBaseCalorie) {
+            float lessDailyCalorie = userBaseCalorie - dailyUserCalorie;
+            return String.format(
+                    """
+                            Сегодня вы съели %.2f Ккал., а нужно %.2f Ккал.
+                            У вас недобор суточных калорий, поднажмите на холодильник!
+                            Найдите в нем что-нибудь еще на %.2f Ккал.
+                            """,
+                    dailyUserCalorie, userBaseCalorie, lessDailyCalorie
+            );
+        } else if (dailyUserCalorie > userBaseCalorie) {
+            float moreDailyCalorie = dailyUserCalorie - userBaseCalorie;
+            return String.format(
+                    """
+                            Сегодня вы съели %.2f Ккал., а нужно %.2f Ккал.
+                            У вас перебор суточных калорий на %.2f Ккал.
+                            Срочно заприте холодильник на замок!
+                            """,
+                    dailyUserCalorie, userBaseCalorie, moreDailyCalorie
+            );
+        } else {
+            return String.format(
+                    """
+                            Сегодня вы съели %.2f Ккал.
+                            Это ровно столько, сколько нужно!
+                            Идеальное попадание в цель!
+                            """,
+                    dailyUserCalorie
+            );
         }
     }
 }

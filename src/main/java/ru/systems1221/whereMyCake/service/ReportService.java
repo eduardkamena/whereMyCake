@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface ReportService {
 
     DailyReport getDailyUserReport(UUID userId, LocalDate date);
+
+    String checkDailyUserCalorie(UUID userId, LocalDate date);
 }

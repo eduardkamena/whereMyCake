@@ -21,7 +21,7 @@ public class ReportController {
 
     private final ReportService reportService;
 
-    @GetMapping(path = "/daily")
+    @GetMapping(path = "/daily/total")
     public ResponseEntity<?> getDailyUserReport(@RequestParam UUID userId,
                                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("getDailyReport method called for User with id: {} and date: {}", userId, date);
@@ -29,7 +29,20 @@ public class ReportController {
             DailyReport report = reportService.getDailyUserReport(userId, date);
             return ResponseEntity.ok(report);
         } catch (IllegalArgumentException e) {
-            log.error("Validation error: {}", e.getMessage());
+            log.error("Validation for report error: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping(path = "/daily/check")
+    public ResponseEntity<?> checkDailyUserCalorie(@RequestParam UUID userId,
+                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        log.info("checkDailyUserCalorie method called for User with id: {} and date: {}", userId, date);
+        try {
+            String check = reportService.checkDailyUserCalorie(userId, date);
+            return ResponseEntity.ok(check);
+        } catch (IllegalArgumentException e) {
+            log.error("Validation for checking error: {}", e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
