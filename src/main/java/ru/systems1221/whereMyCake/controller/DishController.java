@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/dishes")
-@Tag(name = "Блюда")
+@Tag(name = "Контроллер работы с блюдами")
 @Slf4j
 @RequiredArgsConstructor
 public class DishController {

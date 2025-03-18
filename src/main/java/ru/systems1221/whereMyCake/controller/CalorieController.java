@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/calorie")
-@Tag(name = "Дневная норма калорий пользователя")
+@Tag(name = "Контроллер работы с дневной нормой калорий пользователя")
 @Slf4j
 @RequiredArgsConstructor
 public class CalorieController {

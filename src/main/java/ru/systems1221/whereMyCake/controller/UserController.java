@@ -15,7 +15,7 @@ import ru.systems1221.whereMyCake.service.UserService;
 
 @RestController
 @RequestMapping("/users")
-@Tag(name = "Пользователи")
+@Tag(name = "Контроллер работы с пользователями")
 @Validated
 @Slf4j
 @RequiredArgsConstructor
