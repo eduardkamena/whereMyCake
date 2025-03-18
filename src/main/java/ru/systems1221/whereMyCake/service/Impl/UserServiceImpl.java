@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity createUser(UserEntity user) {
+
         if (user.getAge() <= AGE_MIN || user.getAge() > AGE_MAX) {
             throw new IllegalArgumentException("Parameter age must be between 14 and 100");
         } else if (user.getWeight() <= WEIGHT_MIN || user.getWeight() > WEIGHT_MAX) {

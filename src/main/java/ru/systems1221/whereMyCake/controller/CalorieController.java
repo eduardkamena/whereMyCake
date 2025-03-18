@@ -16,29 +16,30 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/calorie")
-@Tag(name = "Дневная норма калорий")
+@Tag(name = "Дневная норма калорий пользователя")
 @Slf4j
 @RequiredArgsConstructor
 public class CalorieController {
 
     private final CalorieService calorieService;
 
-    @GetMapping(path = "{id}")
-    public ResponseEntity<Float> getUserCalorie(@PathVariable UUID id) {
-        log.info("getUserCalorie method called for User with id: {}", id);
-        if (id == null) {
+    @GetMapping(path = "{userId}")
+    public ResponseEntity<?> getUserCalorie(@PathVariable UUID userId) {
+
+        log.info("getUserCalorie method called for User with id: {}", userId);
+        if (userId == null) {
             log.warn("User id is null");
             return ResponseEntity.badRequest().build();
         }
         try {
-            Float userCalorie = calorieService.getUserCalorie(id);
+            Float userCalorie = calorieService.getUserCalorie(userId);
             return ResponseEntity.ok(userCalorie);
         } catch (IllegalArgumentException e) {
-            log.error("Invalid input data: {}", id);
-            return ResponseEntity.badRequest().build();
+            log.error("Invalid input data: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (UserNotFoundException e) {
-            log.error("User not found with id: {}", id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            log.error("User not found with id: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }

@@ -4,5 +4,5 @@ import java.util.UUID;
 
 public interface CalorieService {
 
-    Float getUserCalorie(UUID id);
+    Float getUserCalorie(UUID userid);
 }

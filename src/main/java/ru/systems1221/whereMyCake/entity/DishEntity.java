@@ -1,0 +1,44 @@
+package ru.systems1221.whereMyCake.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+@Entity(name = "dishes")
+@Data
+@NoArgsConstructor
+@Schema(description = "Сущность блюда пользователя")
+public class DishEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @JsonIgnore
+    @Schema(description = "Идентификатор блюда")
+    @Column(name = "id", unique = true, nullable = false)
+    private UUID id;
+
+    @Schema(description = "Название блюда")
+    @Column(name = "title", nullable = false)
+    private String title;
+
+    @JsonIgnore
+    @Schema(description = "Дата приема блюда")
+    @Column(name = "date_time", nullable = false)
+    private LocalDateTime dateTime;
+
+    @JsonIgnoreProperties(value = "dishes", allowSetters = true)
+    @OneToMany(mappedBy = "dishes", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Schema(description = "Список параметров блюда")
+    private List<DishParameter> parameters;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id", nullable = false)
+    private UserEntity users;
+}

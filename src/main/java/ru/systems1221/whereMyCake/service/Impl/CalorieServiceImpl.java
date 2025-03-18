@@ -30,11 +30,11 @@ public class CalorieServiceImpl implements CalorieService {
     private final UserRepository userRepository;
 
     @Override
-    public Float getUserCalorie(UUID id) throws UserNotFoundException {
+    public Float getUserCalorie(UUID userid) throws UserNotFoundException {
 
-        Optional<UserEntity> userEntityOptional = userRepository.findById(id);
+        Optional<UserEntity> userEntityOptional = userRepository.findById(userid);
         UserEntity user = userEntityOptional.orElseThrow(
-                () -> new UserNotFoundException("User not found with id: " + id));
+                () -> new UserNotFoundException("User not found with id: " + userid));
 
         float calorie;
         if (user.getGender() == GenderEnum.M) {
