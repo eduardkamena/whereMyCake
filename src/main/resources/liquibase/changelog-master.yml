@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: liquibase/migration/create_users_table.sql
+  - include:
+      file: liquibase/migration/create_dishes_table.sql
+  - include:
+      file: liquibase/migration/create_dishes_parameters_table.sql

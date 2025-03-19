@@ -24,7 +24,7 @@ import ru.systems1221.whereMyCake.service.CalorieService;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/calorie")
+@RequestMapping(path = "/calorie")
 @Tag(name = "Контроллер работы с дневной нормой калорий пользователя",
         description = "API для работы с дневной нормой калорий пользователя")
 @Slf4j

@@ -45,7 +45,7 @@ public class UserEntity {
     private String email;
 
     @Schema(description = "Пол пользователя")
-    @Column(name = "gender", columnDefinition = "VARCHAR(1)", nullable = false)
+    @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
 
@@ -62,7 +62,7 @@ public class UserEntity {
     private int height;
 
     @Schema(description = "Цель пользователя")
-    @Column(name = "aim", columnDefinition = "VARCHAR(12)", nullable = false)
+    @Column(name = "aim", nullable = false)
     @Enumerated(EnumType.STRING)
     private AimEnum aim;
 }

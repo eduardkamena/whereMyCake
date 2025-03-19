@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/dishes")
+@RequestMapping(path = "/dishes")
 @Tag(name = "Контроллер работы с блюдами",
         description = "API для работы с блюдами пользователя")
 @Slf4j

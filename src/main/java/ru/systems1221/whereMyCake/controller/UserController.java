@@ -25,7 +25,7 @@ import ru.systems1221.whereMyCake.entity.UserEntity;
 import ru.systems1221.whereMyCake.service.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(path = "/users")
 @Tag(name = "Контроллер работы с пользователями",
         description = "API для работы с пользователями")
 @Validated
