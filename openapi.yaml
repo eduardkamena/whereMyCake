@@ -1,0 +1,444 @@
+openapi: 3.1.0
+info:
+  title: WhereMyCake API
+  version: "1.0.0"
+  description: API для работы с пользователями, блюдами, отчетами и дневной нормой калорий
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: "Контроллер работы с дневной нормой калорий пользователя"
+    description: "API для работы с дневной нормой калорий пользователя"
+  - name: "Контроллер работы с блюдами"
+    description: "API для работы с блюдами пользователя"
+  - name: "Контроллер работы с отчетами"
+    description: "API для работы с отчетами о питании пользователя"
+  - name: "Контроллер работы с пользователями"
+    description: "API для работы с пользователями"
+paths:
+  /calorie/{userId}:
+    get:
+      tags:
+        - "Контроллер работы с дневной нормой калорий пользователя"
+      summary: "Получить дневную норму калорий пользователя"
+      description: "Возвращает дневную норму калорий для пользователя по его ID."
+      parameters:
+        - name: userId
+          in: path
+          description: "ID пользователя"
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
+      responses:
+        '200':
+          description: "Дневная норма калорий успешно получена"
+          content:
+            application/json:
+              schema:
+                type: number
+              example: 1500.0
+        '400':
+          description: "Некорректный запрос (например, userId равен null)"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Invalid input data: User id cannot be null"
+        '404':
+          description: "Пользователь не найден"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "User not found with id: 123e4567-e89b-12d3-a456-426614174000"
+  /dishes/{userId}:
+    post:
+      tags:
+        - "Контроллер работы с блюдами"
+      summary: "Добавить список блюд для пользователя"
+      description: "Добавляет список блюд для пользователя по его ID."
+      parameters:
+        - name: userId
+          in: path
+          description: "ID пользователя"
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
+      requestBody:
+        description: "Список блюд для добавления"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/DishEntity'
+            example:
+              - title: "Салат Цезарь"
+                parameters:
+                  - calorie: 250
+                    protein: 10
+                    fat: 15
+                    carb: 20
+      responses:
+        '200':
+          description: "Блюда успешно добавлены"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DishEntity'
+              example:
+                - title: "Салат Цезарь"
+                  parameters:
+                    - calorie: 250
+                      protein: 10
+                      fat: 15
+                      carb: 20
+        '400':
+          description: "Некорректный запрос (например, неверные данные блюд)"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Validation error: Invalid input data"
+        '404':
+          description: "Пользователь не найден"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "User not found with id: 123e4567-e89b-12d3-a456-426614174000"
+  /reports/daily/total:
+    get:
+      tags:
+        - "Контроллер работы с отчетами"
+      summary: "Получить дневной отчет по калориям"
+      description: "Возвращает суммарное количество калорий и количество приемов пищи за указанный день."
+      parameters:
+        - name: userId
+          in: query
+          description: "ID пользователя"
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
+        - name: date
+          in: query
+          description: "Дата отчета (в формате YYYY-MM-DD)"
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "2025-03-18"
+      responses:
+        '200':
+          description: "Дневной отчет успешно получен"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyReport'
+              example:
+                totalCalories: 1500.0
+                dishCount: 3
+        '400':
+          description: "Некорректный запрос (например, неверные данные)"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Validation for report error: Invalid input data"
+  /reports/daily/check:
+    get:
+      tags:
+        - "Контроллер работы с отчетами"
+      summary: "Проверить дневную норму калорий"
+      description: "Сравнивает фактическое количество калорий с дневной нормой пользователя."
+      parameters:
+        - name: userId
+          in: query
+          description: "ID пользователя"
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
+        - name: date
+          in: query
+          description: "Дата проверки (в формате YYYY-MM-DD)"
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "2025-03-18"
+      responses:
+        '200':
+          description: "Проверка выполнена успешно"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: |
+                Сегодня вы съели 1200.0 Ккал., а нужно 1500.0 Ккал.
+                У вас недобор суточных калорий, поднажмите на холодильник!
+                Найдите в нем что-нибудь еще на 300.0 Ккал.
+        '400':
+          description: "Некорректный запрос (например, неверные данные)"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Validation for checking error: Invalid input data"
+  /reports/history:
+    get:
+      tags:
+        - "Контроллер работы с отчетами"
+      summary: "Получить историю питания за период"
+      description: "Возвращает историю питания пользователя за указанный период."
+      parameters:
+        - name: userId
+          in: query
+          description: "ID пользователя"
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
+        - name: startDate
+          in: query
+          description: "Начальная дата периода (в формате YYYY-MM-DD)"
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "2025-03-18"
+        - name: endDate
+          in: query
+          description: "Конечная дата периода (в формате YYYY-MM-DD)"
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "2025-03-19"
+      responses:
+        '200':
+          description: "История питания успешно получена"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DailyDishHistory'
+              example:
+                - date: "2025-03-18"
+                  totalCalories: 1200.0
+                  dishCount: 3
+                  dishes:
+                    - title: "Салат Цезарь"
+                      calorie: 250
+                      protein: 10
+                      fat: 15
+                      carb: 20
+        '400':
+          description: "Некорректный запрос (например, неверные данные)"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Validation for history error: Invalid input data"
+  /users:
+    post:
+      tags:
+        - "Контроллер работы с пользователями"
+      summary: "Создать нового пользователя"
+      description: "Создает нового пользователя с указанными данными."
+      requestBody:
+        description: "Данные пользователя"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEntity'
+            example:
+              name: "Иван Вкомандухотелов"
+              email: "ivan@mail.ru"
+              gender: "М"
+              age: 25
+              weight: 70
+              height: 180
+              aim: "Похудение"
+      responses:
+        '200':
+          description: "Пользователь успешно создан"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEntity'
+              example:
+                id: "123e4567-e89b-12d3-a456-426614174000"
+                name: "Иван Вкомандухотелов"
+                email: "ivan@mail.ru"
+                gender: "М"
+                age: 25
+                weight: 70
+                height: 180
+                aim: "Похудение"
+        '400':
+          description: "Некорректный запрос (например, неверные данные)"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Validation error: Invalid input data"
+components:
+  schemas:
+    DishParameterEntity:
+      type: object
+      description: "Сущность параметров блюда"
+      properties:
+        calorie:
+          type: number
+          description: "Количество калорий на порцию блюда"
+        protein:
+          type: number
+          description: "Количество белков на порцию блюда"
+        fat:
+          type: number
+          description: "Количество жиров на порцию блюда"
+        carb:
+          type: number
+          description: "Количество углеводов на порцию блюда"
+      required:
+        - calorie
+        - protein
+        - fat
+        - carb
+    DishEntity:
+      type: object
+      description: "Сущность блюда пользователя"
+      properties:
+        title:
+          type: string
+          description: "Название блюда"
+        parameters:
+          type: array
+          description: "Список параметров блюда"
+          items:
+            $ref: '#/components/schemas/DishParameterEntity'
+      required:
+        - title
+        - parameters
+    UserEntity:
+      type: object
+      description: "Сущность пользователя"
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: "Идентификатор пользователя"
+        name:
+          type: string
+          description: "Имя пользователя"
+        email:
+          type: string
+          format: email
+          description: "Email пользователя"
+          pattern: "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        gender:
+          type: string
+          description: "Пол пользователя"
+          enum:
+            - "М"
+            - "Ж"
+        age:
+          type: integer
+          description: "Возраст пользователя"
+        weight:
+          type: number
+          description: "Вес пользователя"
+        height:
+          type: integer
+          description: "Рост пользователя"
+        aim:
+          type: string
+          description: "Цель пользователя"
+          enum:
+            - "Похудение"
+            - "Поддержание"
+            - "Набор массы"
+      required:
+        - name
+        - email
+        - gender
+        - age
+        - weight
+        - height
+        - aim
+    DailyReport:
+      type: object
+      description: "Дневной отчет по калориям"
+      properties:
+        totalCalories:
+          type: number
+          description: "Суммарное количество калорий за день"
+        dishCount:
+          type: integer
+          description: "Количество приемов пищи за день"
+      required:
+        - totalCalories
+        - dishCount
+    DishInfo:
+      type: object
+      description: "Информация о блюде в отчете"
+      properties:
+        title:
+          type: string
+          description: "Название блюда"
+        calorie:
+          type: number
+          description: "Количество калорий блюда"
+        protein:
+          type: number
+          description: "Количество белков блюда"
+        fat:
+          type: number
+          description: "Количество жиров блюда"
+        carb:
+          type: number
+          description: "Количество углеводов блюда"
+      required:
+        - title
+        - calorie
+        - protein
+        - fat
+        - carb
+    DailyDishHistory:
+      type: object
+      description: "История питания за один день"
+      properties:
+        date:
+          type: string
+          format: date
+          description: "Дата отчета"
+        totalCalories:
+          type: number
+          description: "Суммарное количество калорий за день"
+        dishCount:
+          type: integer
+          description: "Количество приемов пищи за день"
+        dishes:
+          type: array
+          description: "Список блюд в отчете"
+          items:
+            $ref: '#/components/schemas/DishInfo'
+      required:
+        - date
+        - totalCalories
+        - dishCount
+        - dishes
