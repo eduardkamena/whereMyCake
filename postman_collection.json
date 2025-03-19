@@ -200,10 +200,14 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"var dailyReport = pm.response.json();\r",
-									"console.log(\"Daily report:\");\r",
-									"console.log(\"Total calories:\", dailyReport.totalCalories);\r",
-									"console.log(\"Dish count:\", dailyReport.dishCount);"
+									"if (pm.response.code === 400) {\r",
+									"    console.log(\"Если вы видите ошибку со статусом 400, измените даты в pre-значениях коллекции на текущие\");\r",
+									"} else {\r",
+									"    var dailyReport = pm.response.json();\r",
+									"    console.log(\"Daily report:\");\r",
+									"    console.log(\"Total calories:\", dailyReport.totalCalories);\r",
+									"    console.log(\"Dish count:\", dailyReport.dishCount);\r",
+									"}"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -373,17 +377,17 @@
 		},
 		{
 			"key": "date",
-			"value": "2025-03-19",
+			"value": "2025-03-20",
 			"type": "string"
 		},
 		{
 			"key": "start_date",
-			"value": "2025-03-19",
+			"value": "2025-03-20",
 			"type": "string"
 		},
 		{
 			"key": "end_date",
-			"value": "2025-03-19",
+			"value": "2025-03-20",
 			"type": "string"
 		}
 	]
