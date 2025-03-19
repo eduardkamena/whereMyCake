@@ -2,8 +2,20 @@ package ru.systems1221.whereMyCake.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -36,7 +48,7 @@ public class DishEntity {
     @JsonIgnoreProperties(value = "dishes", allowSetters = true)
     @OneToMany(mappedBy = "dishes", cascade = CascadeType.ALL, orphanRemoval = true)
     @Schema(description = "Список параметров блюда")
-    private List<DishParameter> parameters;
+    private List<DishParameterEntity> parameters;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id", nullable = false)

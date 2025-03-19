@@ -1,8 +1,19 @@
 package ru.systems1221.whereMyCake.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +23,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Schema(description = "Сущность параметров блюда")
-public class DishParameter {
+public class DishParameterEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

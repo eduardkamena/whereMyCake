@@ -2,9 +2,11 @@ package ru.systems1221.whereMyCake.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
+
 import ru.systems1221.whereMyCake.entity.DishEntity;
-import ru.systems1221.whereMyCake.entity.DishParameter;
+import ru.systems1221.whereMyCake.entity.DishParameterEntity;
 import ru.systems1221.whereMyCake.entity.UserEntity;
 import ru.systems1221.whereMyCake.exception.UserNotFoundException;
 import ru.systems1221.whereMyCake.repository.DishRepository;
@@ -40,7 +42,7 @@ public class DishServiceImpl implements DishService {
             dish.setDateTime(LocalDateTime.now());
 
             if (dish.getParameters() != null) {
-                for (DishParameter parameter : dish.getParameters()) {
+                for (DishParameterEntity parameter : dish.getParameters()) {
                     validateDishParameters(parameter);
                     parameter.setDishes(dish);
                 }
@@ -52,7 +54,7 @@ public class DishServiceImpl implements DishService {
         return listDishes;
     }
 
-    private void validateDishParameters(DishParameter parameter) {
+    private void validateDishParameters(DishParameterEntity parameter) {
         if (parameter.getCalorie() <= PARAMETER_MIN || parameter.getCalorie() >= CALORIE_MAX) {
             throw new IllegalArgumentException("Parameter calorie must be between 0.01 and 3000 & less than Calorie value");
         }

@@ -1,8 +1,10 @@
 package ru.systems1221.whereMyCake.constant;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import lombok.Getter;
-import ru.systems1221.whereMyCake.deserializer.AimEnumDeserializer;
+
+import ru.systems1221.whereMyCake.constant.deserializer.AimEnumDeserializer;
 import ru.systems1221.whereMyCake.exception.DoesNotEnumException;
 
 import java.util.Arrays;

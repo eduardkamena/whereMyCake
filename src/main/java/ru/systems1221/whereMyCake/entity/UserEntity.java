@@ -1,11 +1,21 @@
 package ru.systems1221.whereMyCake.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.validation.constraints.Pattern;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import ru.systems1221.whereMyCake.constant.AimEnum;
 import ru.systems1221.whereMyCake.constant.GenderEnum;
 
