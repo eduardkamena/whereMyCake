@@ -19,6 +19,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+/**
+ * Сущность, представляющая параметры блюда (калории, белки, жиры, углеводы).
+ * Связана с сущностью {@link DishEntity}.
+ */
 @Entity(name = "dishes_parameters")
 @Data
 @NoArgsConstructor

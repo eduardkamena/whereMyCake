@@ -9,6 +9,10 @@ import ru.systems1221.whereMyCake.exception.DoesNotEnumException;
 
 import java.util.Arrays;
 
+/**
+ * Перечисление, представляющее цели пользователя (похудение, поддержание веса, набор массы).
+ * Каждый элемент перечисления имеет текстовое значение, которое используется для сериализации и десериализации.
+ */
 @Getter
 @JsonDeserialize(using = AimEnumDeserializer.class)
 public enum AimEnum {
@@ -23,6 +27,13 @@ public enum AimEnum {
         this.aimValue = aimValue;
     }
 
+    /**
+     * Возвращает элемент перечисления {@link AimEnum}, соответствующий переданному текстовому значению.
+     *
+     * @param aimValue Текстовое значение цели.
+     * @return Элемент перечисления {@link AimEnum}.
+     * @throws DoesNotEnumException Если переданное значение не соответствует ни одному элементу перечисления.
+     */
     public static AimEnum fromAimValue(String aimValue) {
         for (AimEnum aim : AimEnum.values()) {
             if (aim.getAimValue().equals(aimValue)) {

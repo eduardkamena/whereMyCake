@@ -9,6 +9,10 @@ import ru.systems1221.whereMyCake.exception.DoesNotEnumException;
 
 import java.util.Arrays;
 
+/**
+ * Перечисление, представляющее пол пользователя (Мужской, Женский).
+ * Каждый элемент перечисления имеет текстовое значение, которое используется для сериализации и десериализации.
+ */
 @Getter
 @JsonDeserialize(using = GenderEnumDeserializer.class)
 public enum GenderEnum {
@@ -22,6 +26,13 @@ public enum GenderEnum {
         this.genderValue = genderValue;
     }
 
+    /**
+     * Возвращает элемент перечисления {@link GenderEnum}, соответствующий переданному текстовому значению.
+     *
+     * @param genderValue Текстовое значение пола.
+     * @return Элемент перечисления {@link GenderEnum}.
+     * @throws DoesNotEnumException Если переданное значение не соответствует ни одному элементу перечисления.
+     */
     public static GenderEnum fromGenderValue(String genderValue) {
         for (GenderEnum gender : GenderEnum.values()) {
             if (gender.getGenderValue().equals(genderValue)) {

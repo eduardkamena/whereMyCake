@@ -23,6 +23,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Сущность, представляющая блюдо пользователя.
+ * Содержит информацию о названии блюда, дате приема и параметрах (калории, белки, жиры, углеводы).
+ * Связана с сущностью {@link UserEntity}.
+ */
 @Entity(name = "dishes")
 @Data
 @NoArgsConstructor

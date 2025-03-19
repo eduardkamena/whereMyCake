@@ -21,6 +21,10 @@ import ru.systems1221.whereMyCake.constant.GenderEnum;
 
 import java.util.UUID;
 
+/**
+ * Сущность, представляющая пользователя.
+ * Содержит информацию о пользователе, такую как имя, email, пол, возраст, вес, рост и цель.
+ */
 @Entity(name = "users")
 @Data
 @NoArgsConstructor

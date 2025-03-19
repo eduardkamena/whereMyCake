@@ -23,6 +23,10 @@ import ru.systems1221.whereMyCake.service.CalorieService;
 
 import java.util.UUID;
 
+/**
+ * Контроллер для работы с дневной нормой калорий пользователя.
+ * Предоставляет API для получения дневной нормы калорий по ID пользователя.
+ */
 @RestController
 @RequestMapping(path = "/calorie")
 @Tag(name = "Контроллер работы с дневной нормой калорий пользователя",
@@ -33,6 +37,12 @@ public class CalorieController {
 
     private final CalorieService calorieService;
 
+    /**
+     * Возвращает дневную норму калорий для пользователя по его ID.
+     *
+     * @param userId ID пользователя.
+     * @return Дневная норма калорий.
+     */
     @Operation(
             summary = "Получить дневную норму калорий пользователя",
             description = "Возвращает дневную норму калорий для пользователя по его ID."

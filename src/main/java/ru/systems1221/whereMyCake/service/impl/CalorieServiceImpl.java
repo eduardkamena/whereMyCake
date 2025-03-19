@@ -14,6 +14,10 @@ import ru.systems1221.whereMyCake.service.CalorieService;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Реализация сервиса для работы с дневной нормой калорий пользователя.
+ * Вычисляет дневную норму калорий на основе данных пользователя (пол, вес, рост, возраст).
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -31,6 +35,13 @@ public class CalorieServiceImpl implements CalorieService {
 
     private final UserRepository userRepository;
 
+    /**
+     * Возвращает дневную норму калорий для пользователя по его ID.
+     *
+     * @param userid ID пользователя.
+     * @return Дневная норма калорий.
+     * @throws UserNotFoundException Если пользователь не найден.
+     */
     @Override
     public Float getUserCalorie(UUID userid) throws UserNotFoundException {
 

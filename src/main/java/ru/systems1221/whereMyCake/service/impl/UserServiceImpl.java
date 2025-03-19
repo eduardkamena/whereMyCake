@@ -9,6 +9,10 @@ import ru.systems1221.whereMyCake.entity.UserEntity;
 import ru.systems1221.whereMyCake.repository.UserRepository;
 import ru.systems1221.whereMyCake.service.UserService;
 
+/**
+ * Реализация сервиса для работы с пользователями.
+ * Предоставляет метод для создания нового пользователя с валидацией данных.
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -24,6 +28,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    /**
+     * Создает нового пользователя.
+     *
+     * @param user Данные пользователя.
+     * @return Созданный пользователь.
+     * @throws IllegalArgumentException Если данные пользователя некорректны.
+     */
     @Override
     public UserEntity createUser(UserEntity user) {
 

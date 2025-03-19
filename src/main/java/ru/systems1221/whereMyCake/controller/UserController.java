@@ -24,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.systems1221.whereMyCake.entity.UserEntity;
 import ru.systems1221.whereMyCake.service.UserService;
 
+/**
+ * Контроллер для работы с пользователями.
+ * Предоставляет API для создания нового пользователя.
+ */
 @RestController
 @RequestMapping(path = "/users")
 @Tag(name = "Контроллер работы с пользователями",
@@ -35,6 +39,12 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * Создает нового пользователя.
+     *
+     * @param user Данные пользователя.
+     * @return Созданный пользователь.
+     */
     @Operation(
             summary = "Создать нового пользователя",
             description = "Создает нового пользователя с указанными данными."

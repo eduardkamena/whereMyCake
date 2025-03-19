@@ -27,6 +27,10 @@ import ru.systems1221.whereMyCake.service.DishService;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Контроллер для работы с блюдами пользователя.
+ * Предоставляет API для добавления списка блюд для пользователя.
+ */
 @RestController
 @RequestMapping(path = "/dishes")
 @Tag(name = "Контроллер работы с блюдами",
@@ -37,6 +41,13 @@ public class DishController {
 
     private final DishService dishService;
 
+    /**
+     * Добавляет список блюд для пользователя по его ID.
+     *
+     * @param userId ID пользователя.
+     * @param dishes Список блюд для добавления.
+     * @return Список добавленных блюд.
+     */
     @Operation(
             summary = "Добавить список блюд для пользователя",
             description = "Добавляет список блюд для пользователя по его ID."

@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Реализация сервиса для работы с блюдами пользователя.
+ * Предоставляет методы для добавления блюд и валидации их параметров.
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -30,6 +34,15 @@ public class DishServiceImpl implements DishService {
     private final DishRepository dishRepository;
     private final UserRepository userRepository;
 
+    /**
+     * Добавляет список блюд для пользователя по его ID.
+     *
+     * @param userId ID пользователя.
+     * @param dishes Список блюд для добавления.
+     * @return Список добавленных блюд.
+     * @throws UserNotFoundException    Если пользователь не найден.
+     * @throws IllegalArgumentException Если параметры блюд некорректны.
+     */
     @Override
     public List<DishEntity> addDishes(UUID userId, List<DishEntity> dishes) {
 
@@ -54,6 +67,12 @@ public class DishServiceImpl implements DishService {
         return listDishes;
     }
 
+    /**
+     * Проверяет корректность параметров блюда.
+     *
+     * @param parameter Параметры блюда.
+     * @throws IllegalArgumentException Если параметры некорректны.
+     */
     private void validateDishParameters(DishParameterEntity parameter) {
         if (parameter.getCalorie() <= PARAMETER_MIN || parameter.getCalorie() >= CALORIE_MAX) {
             throw new IllegalArgumentException("Parameter calorie must be between 0.01 and 3000 & less than Calorie value");

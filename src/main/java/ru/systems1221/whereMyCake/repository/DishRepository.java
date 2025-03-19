@@ -11,9 +11,21 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Репозиторий для работы с сущностью {@link DishEntity}.
+ * Предоставляет методы для поиска блюд по ID пользователя и дате.
+ */
 @Repository
 public interface DishRepository extends JpaRepository<DishEntity, UUID> {
 
+    /**
+     * Находит все блюда пользователя за указанный период.
+     *
+     * @param userId ID пользователя.
+     * @param start  Начальная дата периода.
+     * @param end    Конечная дата периода.
+     * @return Список блюд, удовлетворяющих условиям.
+     */
     @Query("SELECT d FROM dishes d WHERE d.users.id = :userId AND d.dateTime BETWEEN :start AND :end")
     List<DishEntity> findByUsersIdAndDateTimeBetween(
             @Param("userId") UUID userId,

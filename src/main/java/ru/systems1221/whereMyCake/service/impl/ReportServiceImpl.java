@@ -22,6 +22,10 @@ import java.util.Comparator;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Реализация сервиса для работы с отчетами о питании пользователя.
+ * Предоставляет методы для получения дневного отчета, проверки дневной нормы калорий и истории питания за период.
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -30,6 +34,14 @@ public class ReportServiceImpl implements ReportService {
     private final DishRepository dishRepository;
     private final CalorieService calorieService;
 
+    /**
+     * Возвращает дневной отчет по калориям для пользователя за указанную дату.
+     *
+     * @param userId ID пользователя.
+     * @param date   Дата отчета.
+     * @return Дневной отчет.
+     * @throws IllegalArgumentException Если данные некорректны.
+     */
     @Override
     public DailyReport getDailyUserReport(UUID userId, LocalDate date) {
 
@@ -54,6 +66,14 @@ public class ReportServiceImpl implements ReportService {
         }
     }
 
+    /**
+     * Проверяет, соответствует ли фактическое количество калорий дневной норме пользователя.
+     *
+     * @param userId ID пользователя.
+     * @param date   Дата проверки.
+     * @return Сообщение с результатом проверки.
+     * @throws IllegalArgumentException Если данные некорректны.
+     */
     @Override
     public String checkDailyUserCalorie(UUID userId, LocalDate date) {
 
@@ -92,6 +112,15 @@ public class ReportServiceImpl implements ReportService {
         }
     }
 
+    /**
+     * Возвращает историю питания пользователя за указанный период.
+     *
+     * @param userId    ID пользователя.
+     * @param startDate Начальная дата периода.
+     * @param endDate   Конечная дата периода.
+     * @return Список дневных отчетов за период.
+     * @throws IllegalArgumentException Если данные некорректны.
+     */
     @Override
     public List<DailyDishHistory> getDailyDishHistory(UUID userId, LocalDate startDate, LocalDate endDate) {
 
