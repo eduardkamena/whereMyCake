@@ -1,4 +1,4 @@
-package ru.systems1221.whereMyCake.service.Impl;
+package ru.systems1221.whereMyCake.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,12 +19,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CalorieServiceImpl implements CalorieService {
 
-    private static final float MALE_BASE_CALORIE = 88.36f;
+    private static final float MALE_BASE_MULTIPLIER = 88.36f;
     private static final float MALE_WEIGHT_MULTIPLIER = 13.4f;
     private static final float MALE_HEIGHT_MULTIPLIER = 4.8f;
     private static final float MALE_AGE_MULTIPLIER = 5.7f;
 
-    private static final float FEMALE_BASE_CALORIE = 447.6f;
+    private static final float FEMALE_BASE_MULTIPLIER = 447.6f;
     private static final float FEMALE_WEIGHT_MULTIPLIER = 9.2f;
     private static final float FEMALE_HEIGHT_MULTIPLIER = 3.1f;
     private static final float FEMALE_AGE_MULTIPLIER = 4.3f;
@@ -40,12 +40,12 @@ public class CalorieServiceImpl implements CalorieService {
 
         float calorie;
         if (user.getGender() == GenderEnum.M) {
-            calorie = MALE_BASE_CALORIE
+            calorie = MALE_BASE_MULTIPLIER
                     + (MALE_WEIGHT_MULTIPLIER * user.getWeight())
                     + (MALE_HEIGHT_MULTIPLIER * user.getHeight())
                     - (MALE_AGE_MULTIPLIER * user.getAge());
         } else {
-            calorie = FEMALE_BASE_CALORIE
+            calorie = FEMALE_BASE_MULTIPLIER
                     + (FEMALE_WEIGHT_MULTIPLIER * user.getWeight())
                     + (FEMALE_HEIGHT_MULTIPLIER * user.getHeight())
                     - (FEMALE_AGE_MULTIPLIER * user.getAge());

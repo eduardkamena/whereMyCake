@@ -1,4 +1,4 @@
-package ru.systems1221.whereMyCake.service.Impl;
+package ru.systems1221.whereMyCake.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
