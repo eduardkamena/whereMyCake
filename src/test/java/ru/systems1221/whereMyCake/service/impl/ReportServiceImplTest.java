@@ -168,16 +168,19 @@ class ReportServiceImplTest {
 
     @Test
     void shouldThrowsWhenGetDailyDishHistory() {
+        // given
         UUID userId = UUID.randomUUID();
         LocalDate startDate = LocalDate.of(2025, 3, 19);
         LocalDate endDate = LocalDate.of(2025, 3, 20);
 
+        // when
         when(dishRepository.findByUsersIdAndDateTimeBetween(
                 userId,
                 startDate.atStartOfDay(),
                 endDate.atTime(23, 59, 59)
         )).thenReturn(List.of());
 
+        // then
         assertThrows(IllegalArgumentException.class, () ->
                 reportService.getDailyDishHistory(userId, startDate, endDate)
         );
