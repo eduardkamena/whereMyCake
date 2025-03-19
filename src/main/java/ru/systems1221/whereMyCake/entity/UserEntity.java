@@ -29,7 +29,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @JsonIgnore
+    //TODO @JsonIgnore возможно восстановить аннотацию после прохождения тестов в коллекции postman
     @Schema(description = "Идентификатор пользователя")
     @Column(name = "id", unique = true, nullable = false)
     private UUID id;

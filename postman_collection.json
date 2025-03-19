@@ -1,0 +1,390 @@
+{
+	"info": {
+		"_postman_id": "e707cc15-484e-4380-b95c-9d4ab661a141",
+		"name": "WhereMyCake API Collection",
+		"description": "Коллекция запросов для API WhereMyCake на основе OpenAPI-спецификации\n\n**Обязательно перед запуском тестов изменить окружение на текущую дату.**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37239801"
+	},
+	"item": [
+		{
+			"name": "UserController",
+			"item": [
+				{
+					"name": "createUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User created successfully\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.be.a('string');\r",
+									"    pm.environment.set(\"user_id\", jsonData.id);\r",
+									"\r",
+									"    // Логирование\r",
+									"    console.log(\"User created with ID:\", jsonData.id);\r",
+									"    console.log(\"Response body:\", jsonData);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Иван Вкомандухотелов\",\r\n  \"email\": \"ivan@mail.ru\",\r\n  \"gender\": \"М\",\r\n  \"age\": 25,\r\n  \"weight\": 70,\r\n  \"height\": 180,\r\n  \"aim\": \"Похудение\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "```\nКонтроллер работы с пользователями\n\n ```"
+		},
+		{
+			"name": "DishController",
+			"item": [
+				{
+					"name": "addDishes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"console.log(\"Dishes added successfully:\");\r",
+									"console.log(\"Response body:\", jsonData);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"title\": \"Салат Цезарь\",\r\n    \"parameters\": [\r\n      {\r\n        \"calorie\": 250,\r\n        \"protein\": 10,\r\n        \"fat\": 15,\r\n        \"carb\": 20\r\n      }\r\n    ]\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/dishes/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dishes",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "```\nКонтроллер работы с блюдами\n\n ```"
+		},
+		{
+			"name": "CalorieController",
+			"item": [
+				{
+					"name": "getUserCalorie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var calorieNorm = pm.response.json();\r",
+									"console.log(\"Daily calorie norm:\", calorieNorm);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/calorie/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"calorie",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "```\nКонтроллер работы с дневной нормой калорий пользователя\n\n ```"
+		},
+		{
+			"name": "ReportController",
+			"item": [
+				{
+					"name": "getDailyUserReport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var dailyReport = pm.response.json();\r",
+									"console.log(\"Daily report:\");\r",
+									"console.log(\"Total calories:\", dailyReport.totalCalories);\r",
+									"console.log(\"Dish count:\", dailyReport.dishCount);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reports/daily/total?userId={{user_id}}&date={{date}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reports",
+								"daily",
+								"total"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user_id}}"
+								},
+								{
+									"key": "date",
+									"value": "{{date}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkDailyUserCalorie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var checkResult = pm.response.text();\r",
+									"console.log(\"Calorie check result:\");\r",
+									"console.log(checkResult);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reports/daily/check?userId={{user_id}}&date={{date}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reports",
+								"daily",
+								"check"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user_id}}"
+								},
+								{
+									"key": "date",
+									"value": "{{date}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDailyDishHistory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var historyData = pm.response.json();\r",
+									"console.log(\"Nutrition history:\");\r",
+									"console.log(\"Response body:\", historyData);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reports/history?userId={{user_id}}&startDate={{start_date}}&endDate={{end_date}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reports",
+								"history"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user_id}}"
+								},
+								{
+									"key": "startDate",
+									"value": "{{start_date}}"
+								},
+								{
+									"key": "endDate",
+									"value": "{{end_date}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "```\nКонтроллер работы с отчетами\n\n ```"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "date",
+			"value": "2025-03-19",
+			"type": "string"
+		},
+		{
+			"key": "start_date",
+			"value": "2025-03-19",
+			"type": "string"
+		},
+		{
+			"key": "end_date",
+			"value": "2025-03-19",
+			"type": "string"
+		}
+	]
+}
