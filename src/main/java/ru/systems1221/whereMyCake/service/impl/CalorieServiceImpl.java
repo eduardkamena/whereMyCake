@@ -38,16 +38,16 @@ public class CalorieServiceImpl implements CalorieService {
     /**
      * Возвращает дневную норму калорий для пользователя по его ID.
      *
-     * @param userid ID пользователя.
+     * @param userId ID пользователя.
      * @return Дневная норма калорий.
      * @throws UserNotFoundException Если пользователь не найден.
      */
     @Override
-    public Float getUserCalorie(UUID userid) throws UserNotFoundException {
+    public Float getUserCalorie(UUID userId) throws UserNotFoundException {
 
-        Optional<UserEntity> userEntityOptional = userRepository.findById(userid);
+        Optional<UserEntity> userEntityOptional = userRepository.findById(userId);
         UserEntity user = userEntityOptional.orElseThrow(
-                () -> new UserNotFoundException("User not found with id: " + userid));
+                () -> new UserNotFoundException("User not found with id: " + userId));
 
         float calorie;
         if (user.getGender() == GenderEnum.M) {

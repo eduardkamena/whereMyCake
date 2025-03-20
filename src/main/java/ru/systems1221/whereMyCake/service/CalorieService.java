@@ -11,8 +11,8 @@ public interface CalorieService {
     /**
      * Возвращает дневную норму калорий для пользователя по его ID.
      *
-     * @param userid ID пользователя.
+     * @param userId ID пользователя.
      * @return Дневная норма калорий.
      */
-    Float getUserCalorie(UUID userid);
+    Float getUserCalorie(UUID userId);
 }
